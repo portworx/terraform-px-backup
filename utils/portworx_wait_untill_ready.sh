@@ -14,7 +14,7 @@ do
         printf "[SUCCESS] Portworx Storage Cluster is Online. Cluster ID: ($CLUSTER_ID)\n"
         break
     fi
-    printf "[INFO] Cluster Status: [ $STATUS ]\n"
+    printf "[INFO] Portworx Storage Cluster Status: [ $STATUS ]\n"
     printf "[INFO] Waiting for Portworx Storage Cluster. (Retry in $SLEEP_TIME secs)\n"
     ((RETRIES++))
     sleep $SLEEP_TIME
