@@ -38,17 +38,14 @@ resource "helm_release" "portworx" {
     name  = "aut"
     value = true
   }
-}
-resource "null_resource" "validate_portworx_installation" {
+
   provisioner "local-exec" {
     command     = "bash portworx_wait_untill_ready.sh"
     working_dir = "${path.module}/utils"
     interpreter = ["/bin/bash", "-c"]
   }
-  depends_on = [
-    helm_release.portworx
-  ]
 }
+
 
 resource "kubernetes_manifest" "storageclass_default" {
   manifest = {
@@ -125,7 +122,7 @@ resource "helm_release" "portworx_backup" {
     }
   }
   depends_on = [
-    null_resource.validate_portworx_installation,
+    helm_release.portworx,
     kubernetes_manifest.storageclass_default
   ]
 }
