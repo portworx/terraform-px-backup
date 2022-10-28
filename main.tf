@@ -50,6 +50,7 @@ resource "null_resource" "validate_portworx_installation" {
     helm_release.portworx
   ]
 }
+
 resource "kubernetes_manifest" "storageclass_default" {
   manifest = {
     "allowVolumeExpansion" = true
@@ -75,6 +76,7 @@ resource "helm_release" "portworx_backup" {
   version          = var.px_backup_version
   namespace        = var.namespace
   create_namespace = true
+  wait             = false
 
   set {
     name  = "persistentStorage.enabled"
@@ -127,5 +129,16 @@ resource "helm_release" "portworx_backup" {
   depends_on = [
     null_resource.validate_portworx_installation,
     kubernetes_manifest.storageclass_default
+  ]
+}
+
+resource "null_resource" "validate_portworx_backup_installation" {
+  provisioner "local-exec" {
+    command     = "bash portworx_backup_validation.sh"
+    working_dir = "${path.module}/utils"
+    interpreter = ["/bin/bash", "-c"]
+  }
+  depends_on = [
+    helm_release.portworx_backup
   ]
 }
