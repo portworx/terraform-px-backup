@@ -38,7 +38,6 @@ resource "helm_release" "portworx" {
     name  = "aut"
     value = true
   }
-
   provisioner "local-exec" {
     command     = "bash portworx_wait_untill_ready.sh"
     working_dir = "${path.module}/utils"
