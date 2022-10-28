@@ -75,6 +75,7 @@ resource "helm_release" "portworx_backup" {
   version          = var.px_backup_version
   namespace        = var.namespace
   create_namespace = true
+  timeout          = 500
 
   set {
     name  = "persistentStorage.enabled"
