@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 STATUS=""
 SLEEP_TIME=30
 LIMIT=10
 RETRIES=0
 
-sleep $SLEEP_TIME
+sleep 120
 
 while [ "$RETRIES" -le "$LIMIT" ]
 do

@@ -40,9 +40,9 @@ resource "helm_release" "portworx" {
   }
 
   provisioner "local-exec" {
-    command     = "sh portworx_wait_untill_ready.sh"
+    command     = "bash portworx_wait_untill_ready.sh"
     working_dir = "${path.module}/utils"
-    interpreter = ["/bin/sh", "-c"]
+    interpreter = ["/bin/bash", "-c"]
   }
 }
 
