@@ -1,0 +1,4 @@
+locals {
+  oidc_config                  = var.external_oidc_provider.enabled ? { "oidc.externalOIDC.enabled" = "true", "oidc.externalOIDC.endpoint" = var.external_oidc_provider.endpoint, "oidc.externalOIDC.clientID" = var.external_oidc_provider.client_id, "oidc.externalOIDC.clientSecret" = var.external_oidc_provider.client_secret } : {}
+  custom_image_registry_config = var.custom_image_registry.enabled ? ["pxcentralApiServerImage", "pxcentralFrontendImage", "pxcentralBackendImage", "pxcentralMiddlewareImage", "postInstallSetupImage", "keycloakBackendImage", "keycloakFrontendImage", "keycloakLoginThemeImage", "keycloakInitContainerImage", "mysqlImage", "pxBackupImage", "mongodbImage", "licenseServerImage", "cortexImage", "cassandraImage", "proxyConfigImage", "consulImage", "dnsmasqImage", "grafanaImage", "prometheusImage", "prometheusConfigReloadrImage", "prometheusOperatorImage", "memcachedMetricsImage", "memcachedIndexImage", "memcachedImage"] : []
+}
