@@ -1,9 +1,10 @@
+# TODO: Create proper outputs and add descriptions
 output "portworx_operator_status" {
-  value       = "online"
+  value       = helm_release.portworx[0].metadata[0]
   description = "value"
 }
 
 output "portworx_backup_status" {
-  value       = "deployed"
+  value       = helm_release.portworx_backup.metadata[0]
   description = "value"
 }

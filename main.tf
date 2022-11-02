@@ -1,4 +1,49 @@
+resource "null_resource" "validate_portworx_installation" {
+  provisioner "local-exec" {
+    command     = "bash portworx_wait_untill_ready.sh ${var.kubecontext}"
+    working_dir = "${path.module}/utils"
+    interpreter = ["/bin/bash", "-c"]
+    on_failure  = fail
+  }
+  depends_on = [
+    helm_release.portworx
+  ]
+}
+
+resource "null_resource" "validate_portworx_backup_installation" {
+  triggers = {
+    license_server = var.enable_px_license_server,
+    monitor        = var.px_monitor_config.enable,
+    backup         = var.px_backup_version
+  }
+  provisioner "local-exec" {
+    command     = "bash portworx_backup_validation.sh ${var.kubecontext}"
+    working_dir = "${path.module}/utils"
+    interpreter = ["/bin/bash", "-c"]
+    on_failure  = fail
+  }
+  depends_on = [
+    helm_release.portworx_backup
+  ]
+}
+
+resource "null_resource" "label_nodes_px_license_server" {
+  count = var.enable_px_license_server ? 1 : 0
+  triggers = {
+    kubecontext = var.kubecontext
+  }
+  provisioner "local-exec" {
+    command    = "kubectl config use-context ${var.kubecontext} && kubectl get nodes | grep -v 'control-plane\\|master' | awk 'NR>1 { print $1 }' | head -n 2 | xargs -I {} kubectl label node {} px/ls=true"
+    on_failure = fail
+  }
+  provisioner "local-exec" {
+    when    = destroy
+    command = "kubectl config use-context ${self.triggers.kubecontext} && kubectl label node --all px/ls-"
+  }
+}
+
 resource "helm_release" "portworx" {
+  count      = var.enable_portworx ? 1 : 0
   name       = "portworx"
   repository = "https://raw.githubusercontent.com/portworx/eks-blueprint-helm/main/repo/stable"
   chart      = "portworx"
@@ -40,34 +85,24 @@ resource "helm_release" "portworx" {
   }
 }
 
-resource "null_resource" "validate_portworx_installation" {
-  provisioner "local-exec" {
-    command     = "bash portworx_wait_untill_ready.sh"
-    working_dir = "${path.module}/utils"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  depends_on = [
-    helm_release.portworx
-  ]
-}
 
 resource "kubernetes_manifest" "storageclass_default" {
+  count = var.portworx_storage_class_config != null ? 1 : 0
   manifest = {
     "allowVolumeExpansion" = true
     "apiVersion"           = "storage.k8s.io/v1"
     "kind"                 = "StorageClass"
     "metadata" = {
-      "name" = "px-default"
+      "name" = var.portworx_storage_class_config.name
     }
     "parameters" = {
-      "repl" = "1"
+      "repl" = tostring(var.portworx_storage_class_config.replication)
     }
-    "provisioner"       = "kubernetes.io/portworx-volume"
+    "provisioner"       = var.portworx_storage_class_config.provisioner
     "reclaimPolicy"     = "Delete"
     "volumeBindingMode" = "Immediate"
   }
 }
-
 
 resource "helm_release" "portworx_backup" {
   name             = "px-central"
@@ -82,13 +117,28 @@ resource "helm_release" "portworx_backup" {
     name  = "persistentStorage.enabled"
     value = true
   }
+
   set {
     name  = "persistentStorage.storageClassName"
-    value = "px-default"
+    value = var.portworx_storage_class_config != null ? var.portworx_storage_class_config.name : var.external_storage_class_name
   }
   set {
     name  = "pxbackup.enabled"
     value = true
+  }
+
+  set {
+    name  = "pxlicenseserver.enabled"
+    value = var.enable_px_license_server
+  }
+
+  dynamic "set" {
+    for_each = local.px_monitor_config
+    iterator = params
+    content {
+      name  = params.key
+      value = params.value
+    }
   }
 
   dynamic "set" {
@@ -119,26 +169,17 @@ resource "helm_release" "portworx_backup" {
   }
 
   dynamic "set" {
-    for_each = var.custom_image_registry.image_pull_secrets
+    for_each = var.custom_image_registry != null ? var.custom_image_registry.image_pull_secrets : []
     iterator = secret
     content {
       name  = "images.pullSecrets[${secret.key}]"
       value = secret.value
     }
   }
+
   depends_on = [
     null_resource.validate_portworx_installation,
-    kubernetes_manifest.storageclass_default
-  ]
-}
-
-resource "null_resource" "validate_portworx_backup_installation" {
-  provisioner "local-exec" {
-    command     = "bash portworx_backup_validation.sh"
-    working_dir = "${path.module}/utils"
-    interpreter = ["/bin/bash", "-c"]
-  }
-  depends_on = [
-    helm_release.portworx_backup
+    kubernetes_manifest.storageclass_default,
+    null_resource.label_nodes_px_license_server
   ]
 }

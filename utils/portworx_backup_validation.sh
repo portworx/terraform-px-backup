@@ -1,20 +1,23 @@
 #!/bin/bash
 STATUS=""
 SLEEP_TIME=30
-LIMIT=10
+LIMIT=20
 RETRIES=0
+
+kubectl config use-context $1
 
 sleep 120
 
 while [ "$RETRIES" -le "$LIMIT" ]
 do
-    STATUS=$(kubectl get job pxcentral-post-install-hook -n central -o jsonpath={.status.succeeded})
-    if [ "$STATUS" == "1" ]; then
+    STATUS=$(kubectl get pods -l=job-name=pxcentral-post-install-hook -n central --no-headers -o custom-columns=":status.phase")
+    if [ "$STATUS" == "Succeeded" ]; then
+        printf "[INFO] Removing Post Install Job.\n"
+        kubectl delete job -n central pxcentral-post-install-hook
         printf "[SUCCESS] Portworx Central Installation Complete.\n"
         break
     fi
-    printf "[INFO] Portworx Central Job Status: [ $STATUS ]\n"
-    printf "[INFO] Waiting for Portworx Portworx Central Job to finish. (Retry in $SLEEP_TIME secs)\n"
+    printf "[INFO] Waiting for Portworx Central Job to finish. (Retry in $SLEEP_TIME secs)\n"
     ((RETRIES++))
     sleep $SLEEP_TIME
 done

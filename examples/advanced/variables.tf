@@ -27,6 +27,12 @@ variable "kubecontext" {
   description = "Name of the kubecontext"
 }
 
+variable "kubeconfig_path" {
+  type        = string
+  description = "Path to the kubeconfig to connect to the kubernetes cluster"
+  default     = "~/.kube/config"
+}
+
 variable "enable_px_license_server" {
   type        = bool
   description = "Enable Portworx License Server"

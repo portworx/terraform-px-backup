@@ -35,5 +35,5 @@ terraform.rc
 **/**terraform.lock.hcl
 
 .vscode/*
-**/tf.plan
+**/**/tf.plan
 **/.DS_Store
