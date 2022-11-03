@@ -26,3 +26,9 @@ variable "kubeconfig_path" {
   description = "Path to the kubeconfig to connect to the kubernetes cluster"
   default     = "~/.kube/config"
 }
+
+variable "external_storage_class_name" {
+  type        = string
+  description = "Name of the already existing Storage Class to be used in-place of `portworx_storage_class_config`"
+  default     = ""
+}
