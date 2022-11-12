@@ -4,7 +4,6 @@ module "portworx_backup" {
   px_version                    = var.px_version
   px_operator_version           = var.px_operator_version
   namespace                     = var.namespace
-  kubecontext                   = var.kubecontext
   enable_px_license_server      = var.enable_px_license_server
   enable_portworx               = var.enable_portworx
   external_oidc_provider        = var.external_oidc_provider
@@ -12,5 +11,4 @@ module "portworx_backup" {
   portworx_storage_class_config = var.portworx_storage_class_config
   px_monitor_config             = var.px_monitor_config
   external_storage_class_name   = var.external_storage_class_name
-
 }

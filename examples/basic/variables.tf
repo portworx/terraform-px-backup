@@ -16,11 +16,6 @@ variable "px_operator_version" {
   default     = "1.10.0"
 }
 
-variable "kubecontext" {
-  type        = string
-  description = "Name of the kubecontext"
-}
-
 variable "kubeconfig_path" {
   type        = string
   description = "Path to the kubeconfig to connect to the kubernetes cluster"

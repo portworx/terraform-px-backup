@@ -4,8 +4,6 @@ SLEEP_TIME=30
 LIMIT=20
 RETRIES=0
 
-kubectl config use-context $1
-
 sleep 120
 
 while [ "$RETRIES" -le "$LIMIT" ]

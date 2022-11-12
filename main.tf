@@ -29,16 +29,13 @@ resource "null_resource" "validate_portworx_backup_installation" {
 
 resource "null_resource" "label_nodes_px_license_server" {
   count = var.enable_px_license_server ? 1 : 0
-  triggers = {
-    kubecontext = var.kubecontext
-  }
   provisioner "local-exec" {
-    command    = "kubectl config use-context ${var.kubecontext} && kubectl get nodes | grep -v 'control-plane\\|master' | awk 'NR>1 { print $1 }' | head -n 2 | xargs -I {} kubectl label node {} px/ls=true"
+    command    = "kubectl get nodes | grep -v 'control-plane\\|master' | awk 'NR>1 { print $1 }' | head -n 2 | xargs -I {} kubectl label node {} px/ls=true"
     on_failure = fail
   }
   provisioner "local-exec" {
     when    = destroy
-    command = "kubectl config use-context ${self.triggers.kubecontext} && kubectl label node --all px/ls-"
+    command = "kubectl label node --all px/ls-"
   }
 }
 

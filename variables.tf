@@ -22,11 +22,6 @@ variable "namespace" {
   default     = "central"
 }
 
-variable "kubecontext" {
-  type        = string
-  description = "Name of the kubecontext"
-}
-
 variable "enable_px_license_server" {
   type        = bool
   description = "Enable Portworx License Server"
