@@ -1,6 +1,6 @@
 resource "null_resource" "validate_portworx_installation" {
   provisioner "local-exec" {
-    command     = "bash portworx_wait_untill_ready.sh ${var.kubecontext}"
+    command     = "bash portworx_wait_untill_ready.sh"
     working_dir = "${path.module}/utils"
     interpreter = ["/bin/bash", "-c"]
     on_failure  = fail
