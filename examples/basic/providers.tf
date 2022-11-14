@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  config_context = var.kubecontext
+  config_path = var.kubeconfig_path
 }
 
 

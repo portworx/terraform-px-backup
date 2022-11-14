@@ -17,7 +17,7 @@ resource "null_resource" "validate_portworx_backup_installation" {
     backup         = var.px_backup_version
   }
   provisioner "local-exec" {
-    command     = "bash portworx_backup_validation.sh ${var.kubecontext}"
+    command     = "bash portworx_backup_validation.sh"
     working_dir = "${path.module}/utils"
     interpreter = ["/bin/bash", "-c"]
     on_failure  = fail
