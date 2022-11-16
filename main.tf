@@ -14,10 +14,11 @@ resource "null_resource" "validate_portworx_backup_installation" {
   triggers = {
     license_server = var.enable_px_license_server,
     monitor        = var.px_monitor_config.enable,
-    backup         = var.px_backup_version
+    backup         = var.px_backup_version,
+    namespace      = var.namespace
   }
   provisioner "local-exec" {
-    command     = "bash portworx_backup_validation.sh"
+    command     = "bash portworx_backup_validation.sh ${self.triggers.namespace}"
     working_dir = "${path.module}/utils"
     interpreter = ["/bin/bash", "-c"]
     on_failure  = fail
