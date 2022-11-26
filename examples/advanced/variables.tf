@@ -85,3 +85,9 @@ variable "external_storage_class_name" {
   description = "Name of the already existing Storage Class to be used in-place of `portworx_storage_class_config`"
   default     = ""
 }
+
+variable "wait_for_px_central" {
+  type        = bool
+  description = "Wait for PX Central Installation"
+  default     = true
+}
