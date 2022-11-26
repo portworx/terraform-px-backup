@@ -6,7 +6,7 @@ RETRIES=0
 
 NAMESPACE=$1
 WAIT_FOR_PX_CENTRAL=$2
-sleep 240
+sleep 300
 
 if ! $WAIT_FOR_PX_CENTRAL; then
     printf "[INFO] Fast Install Selected. Checking for PX-Backup Installation Only.\n"
