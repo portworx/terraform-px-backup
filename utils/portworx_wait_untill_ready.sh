@@ -1,7 +1,7 @@
 #!/bin/bash
 STATUS=""
 SLEEP_TIME=30
-LIMIT=10
+LIMIT=30
 RETRIES=0
 
 sleep 120
