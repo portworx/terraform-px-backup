@@ -10,6 +10,19 @@ sleep 300
 
 if ! $WAIT_FOR_PX_CENTRAL; then
     printf "[INFO] Fast Install Selected. Checking for PX-Backup Installation Only.\n"
+    RETRIES=0
+    while [ "$RETRIES" -le "$LIMIT" ]; do
+        READY_POD=$(kubectl get sts pxcentral-keycloak -n ${NAMESPACE} -o jsonpath='{.status.readyReplicas}')
+        if [ "$READY_POD" == "1" ]; then
+            printf "[SUCCESS] Key Cloak is up and running.\n"
+            break
+        fi
+        printf "[INFO] Waiting for Key Cloak to be ready. (Retry in $SLEEP_TIME secs)\n"
+        ((RETRIES++))
+        sleep $SLEEP_TIME
+    done
+
+    RETRIES=0
     while [ "$RETRIES" -le "$LIMIT" ]; do
         STATUS=$(kubectl get pods -l app=px-backup -n ${NAMESPACE} -o jsonpath='{.items[].status.containerStatuses[0].ready}')
         if [ "$STATUS" == "true" ]; then
