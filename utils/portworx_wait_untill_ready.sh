@@ -25,9 +25,9 @@ if [ "$RETRIES" -gt "$LIMIT" ]; then
 fi
 
 RETRIES=0
-PODS_COUNT=$(kubectl get pods -l name=portworx -n kube-system | wc -l | xargs)
+PODS_COUNT=$(kubectl get pods -l name=portworx -n kube-system --no-headers | wc -l | xargs)
 while [ "$RETRIES" -le "$LIMIT" ]; do
-    READY_COUNT=$(kubectl get pods -l name=portworx -n kube-system -o json | jq -r '.items[] | select(.status.conditions[].type=="Ready") | .metadata.name' | wc -l | xargs)
+    READY_COUNT=$(kubectl get pods -l name=portworx -n kube-system -o json | jq -r '.items[] | select(.status.containerStatuses[1].ready==true) | .metadata.name' | wc -l | xargs)
     if [ "$PODS_COUNT" == "$READY_COUNT" ]; then
         printf "[SUCCESS] All Portworx Pods are up and running\n"
         break
