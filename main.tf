@@ -79,7 +79,7 @@ resource "helm_release" "portworx" {
 
   set {
     name  = "aut"
-    value = true
+    value = var.enable_autopilot ? true : false
   }
 }
 

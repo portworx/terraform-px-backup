@@ -28,6 +28,12 @@ variable "enable_px_license_server" {
   default     = false
 }
 
+variable "enable_autopilot" {
+  type        = bool
+  description = "Enable Autopilot"
+  default     = false
+}
+
 variable "enable_portworx" {
   type        = bool
   description = "Enable Portworx Storage Cluster"
