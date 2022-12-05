@@ -4,6 +4,6 @@ output "portworx_operator_status" {
 }
 
 output "portworx_backup_status" {
-  value       = var.enable_portworx ? helm_release.portworx_backup[0].metadata[0] : "Portworx Backup Not Installed"
+  value       = var.enable_portworx ? helm_release.portworx_backup[0].metadata[0] : null
   description = "Portworx Backup Parameters"
 }
