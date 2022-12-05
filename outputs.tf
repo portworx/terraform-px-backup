@@ -4,6 +4,6 @@ output "portworx_operator_status" {
 }
 
 output "portworx_backup_status" {
-  value       = helm_release.portworx_backup.metadata[0]
+  value       = helm_release.portworx_backup[0].metadata[0]
   description = "Portworx Backup Parameters"
 }
