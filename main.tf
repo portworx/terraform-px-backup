@@ -103,6 +103,7 @@ resource "kubernetes_manifest" "storageclass_default" {
 }
 
 resource "helm_release" "portworx_backup" {
+  count            = var.enable_portworx_backup ? 1 : 0
   name             = "px-central"
   repository       = "http://charts.portworx.io/"
   chart            = "px-central"

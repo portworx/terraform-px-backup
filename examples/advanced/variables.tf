@@ -91,3 +91,8 @@ variable "wait_for_px_central" {
   description = "Wait for PX Central Installation"
   default     = true
 }
+variable "enable_portworx_backup" {
+  type        = bool
+  description = "Enable Portworx Backup"
+  default     = true
+}
