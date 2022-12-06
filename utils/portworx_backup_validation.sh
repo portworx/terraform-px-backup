@@ -13,6 +13,7 @@ while [ "$RETRIES" -le "$LIMIT" ]; do
     STATUS=$(kubectl get pods -l=job-name=pxcentral-post-install-hook -n ${NAMESPACE} --no-headers -o custom-columns=":status.phase")
     if [ "$STATUS" == "Succeeded" ]; then
         printf "[INFO] Removing Post Install Job.\n"
+        kubectl get pods -o wide -n ${NAMESPACE}
         kubectl delete job -n ${NAMESPACE} pxcentral-post-install-hook
         printf "[SUCCESS] Portworx Central Installation Complete.\n"
         break
