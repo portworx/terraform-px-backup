@@ -1,12 +1,12 @@
 #!/bin/bash
 STATUS=""
-SLEEP_TIME=60
+SLEEP_TIME=30
 LIMIT=60
 RETRIES=0
 
 NAMESPACE=$1
 WAIT_FOR_PX_CENTRAL=$2
-sleep 300
+sleep 200
 
 while [ "$RETRIES" -le "$LIMIT" ]; do
     STATUS=$(kubectl get pods -l=job-name=pxcentral-post-install-hook -n ${NAMESPACE} --no-headers -o custom-columns=":status.phase" | awk 'END { print }')
