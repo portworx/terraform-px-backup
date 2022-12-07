@@ -8,9 +8,8 @@ NAMESPACE=$1
 WAIT_FOR_PX_CENTRAL=$2
 sleep 300
 
-
 while [ "$RETRIES" -le "$LIMIT" ]; do
-    STATUS=$(kubectl get pods -l=job-name=pxcentral-post-install-hook -n ${NAMESPACE} --no-headers -o custom-columns=":status.phase")
+    STATUS=$(kubectl get pods -l=job-name=pxcentral-post-install-hook -n ${NAMESPACE} --no-headers -o custom-columns=":status.phase" | awk 'END { print }')
     if [ "$STATUS" == "Succeeded" ]; then
         printf "[INFO] Removing Post Install Job.\n"
         kubectl get pods -o wide -n ${NAMESPACE}
@@ -22,7 +21,6 @@ while [ "$RETRIES" -le "$LIMIT" ]; do
     ((RETRIES++))
     sleep $SLEEP_TIME
 done
-
 
 if [ "$RETRIES" -gt "$LIMIT" ]; then
     printf "[ERROR] All Retries Exhausted!\n"
