@@ -23,22 +23,3 @@ if [ "$RETRIES" -gt "$LIMIT" ]; then
     printf "[ERROR] All Retries Exhausted!\n"
     exit 1
 fi
-
-RETRIES=0
-PODS_COUNT=$(kubectl get pods -l name=portworx -n kube-system --no-headers | wc -l | xargs)
-while [ "$RETRIES" -le "$LIMIT" ]; do
-    READY_COUNT=$(kubectl get pods -l name=portworx -n kube-system -o json | jq -r '.items[] | select(.status.containerStatuses[1].ready==true) | .metadata.name' | wc -l | xargs)
-    if [ "$PODS_COUNT" == "$READY_COUNT" ]; then
-        printf "[SUCCESS] All Portworx Pods are up and running\n"
-        break
-    fi
-    printf "[INFO] Portworx Pods Status: [ $READY_COUNT/$PODS_COUNT ]\n"
-    printf "[INFO] Waiting for All Portworx Pods. (Retry in $SLEEP_TIME secs)\n"
-    ((RETRIES++))
-    sleep $SLEEP_TIME
-done
-
-if [ "$RETRIES" -gt "$LIMIT" ]; then
-    printf "[ERROR] All Retries Exhausted!\n"
-    exit 1
-fi
