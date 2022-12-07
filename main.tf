@@ -127,6 +127,11 @@ resource "helm_release" "portworx_backup" {
   }
 
   set {
+    name  = "pxbackup.datastore"
+    value = "mongodb"
+  }
+
+  set {
     name  = "pxlicenseserver.enabled"
     value = var.enable_px_license_server
   }
