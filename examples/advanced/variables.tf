@@ -7,7 +7,7 @@ variable "px_backup_version" {
 variable "px_version" {
   type        = string
   description = "Portworx Image Version (OCI Monitor Image)"
-  default     = "2.12.0"
+  default     = "2.11.0"
 }
 
 variable "px_operator_version" {
