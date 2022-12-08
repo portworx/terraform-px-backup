@@ -45,11 +45,6 @@ variable "enable_portworx_backup" {
   description = "Enable Portworx Backup"
   default     = true
 }
-variable "wait_for_px_central" {
-  type        = bool
-  description = "Wait for PX Central Installation"
-  default     = true
-}
 
 variable "external_oidc_provider" {
   type = object({

@@ -20,7 +20,7 @@ resource "null_resource" "validate_portworx_backup_installation" {
     namespace      = var.namespace
   }
   provisioner "local-exec" {
-    command     = "bash portworx_backup_validation.sh ${self.triggers.namespace} ${var.wait_for_px_central}"
+    command     = "bash portworx_backup_validation.sh ${self.triggers.namespace} ${var.enable_portworx_backup}"
     working_dir = "${path.module}/utils"
     interpreter = ["/bin/bash", "-c"]
     on_failure  = fail

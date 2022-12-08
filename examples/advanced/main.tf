@@ -11,6 +11,5 @@ module "portworx_backup" {
   portworx_storage_class_config = var.portworx_storage_class_config
   px_monitor_config             = var.px_monitor_config
   external_storage_class_name   = var.external_storage_class_name
-  wait_for_px_central           = var.wait_for_px_central
   enable_portworx_backup        = var.enable_portworx_backup
 }

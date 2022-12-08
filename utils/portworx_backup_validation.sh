@@ -5,7 +5,13 @@ LIMIT=60
 RETRIES=0
 
 NAMESPACE=$1
-WAIT_FOR_PX_CENTRAL=$2
+ENABLE_PX_BACKUP=$2
+
+if ! $ENABLE_PX_BACKUP; then
+    printf "[INFO] No PX Backup Installation Requested\n"
+    exit 0
+fi
+
 sleep 200
 
 while [ "$RETRIES" -le "$LIMIT" ]; do
