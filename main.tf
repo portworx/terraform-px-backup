@@ -1,4 +1,5 @@
 resource "null_resource" "validate_portworx_installation" {
+  count = var.enable_portworx ? 1 : 0
   provisioner "local-exec" {
     command     = "bash portworx_wait_untill_ready.sh"
     working_dir = "${path.module}/utils"
@@ -11,6 +12,7 @@ resource "null_resource" "validate_portworx_installation" {
 }
 
 resource "null_resource" "validate_portworx_backup_installation" {
+  count = var.enable_portworx_backup ? 1 : 0
   triggers = {
     license_server = var.enable_px_license_server,
     monitor        = var.px_monitor_config.enable,
