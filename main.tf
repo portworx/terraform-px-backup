@@ -158,7 +158,7 @@ resource "helm_release" "portworx_backup" {
     iterator = params
     content {
       name  = "image.${params.value}.imageName"
-      value = var.px_backup_custom_image.imageName
+      value = var.px_backup_custom_image.image_name
     }
   }
 
