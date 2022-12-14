@@ -90,3 +90,9 @@ variable "enable_portworx_backup" {
   description = "Enable Portworx Backup"
   default     = true
 }
+
+variable "stork_version" {
+  type        = string
+  description = "Version of stork to be deployed"
+  default     = ""
+}

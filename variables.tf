@@ -22,6 +22,12 @@ variable "namespace" {
   default     = "central"
 }
 
+variable "stork_version" {
+  type        = string
+  description = "Version of stork to be deployed"
+  default     = ""
+}
+
 variable "enable_px_license_server" {
   type        = bool
   description = "Enable Portworx License Server"

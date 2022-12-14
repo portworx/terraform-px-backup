@@ -78,7 +78,10 @@ resource "helm_release" "portworx" {
     name  = "deleteStrategy.type"
     value = "UninstallAndWipe"
   }
-
+  set {
+    name  = "storkVersion"
+    value = var.stork_version
+  }
   set {
     name  = "aut"
     value = var.enable_autopilot ? true : false

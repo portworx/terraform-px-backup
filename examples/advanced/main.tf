@@ -12,4 +12,5 @@ module "portworx_backup" {
   px_monitor_config             = var.px_monitor_config
   external_storage_class_name   = var.external_storage_class_name
   enable_portworx_backup        = var.enable_portworx_backup
+  stork_version                 = var.stork_version
 }
