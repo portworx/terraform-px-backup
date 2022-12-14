@@ -137,6 +137,41 @@ resource "helm_release" "portworx_backup" {
   }
 
   dynamic "set" {
+    for_each = local.px_backup_custom_image
+    iterator = params
+    content {
+      name  = "image.${params.value}.registry"
+      value = var.px_backup_custom_image.registry
+    }
+  }
+  dynamic "set" {
+    for_each = local.px_backup_custom_image
+    iterator = params
+    content {
+      name  = "image.${params.value}.repo"
+      value = var.px_backup_custom_image.repo
+    }
+  }
+
+  dynamic "set" {
+    for_each = local.px_backup_custom_image
+    iterator = params
+    content {
+      name  = "image.${params.value}.imageName"
+      value = var.px_backup_custom_image.imageName
+    }
+  }
+
+  dynamic "set" {
+    for_each = local.px_backup_custom_image
+    iterator = params
+    content {
+      name  = "image.${params.value}.tag"
+      value = var.px_backup_custom_image.tag
+    }
+  }
+
+  dynamic "set" {
     for_each = local.px_monitor_config
     iterator = params
     content {

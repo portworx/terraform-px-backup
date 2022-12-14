@@ -97,3 +97,14 @@ variable "external_storage_class_name" {
   description = "Name of the already existing Storage Class to be used in-place of `portworx_storage_class_config`"
   default     = ""
 }
+
+variable "px_backup_custom_image" {
+  type = object({
+    registry   = string
+    repo       = string
+    image_name = string
+    tag        = string
+  })
+  description = "PX-Backup Custom Image Defination"
+  default     = null
+}

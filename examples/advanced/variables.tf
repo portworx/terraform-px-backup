@@ -96,3 +96,13 @@ variable "stork_version" {
   description = "Version of stork to be deployed"
   default     = ""
 }
+variable "px_backup_custom_image" {
+  type = object({
+    registry   = string
+    repo       = string
+    image_name = string
+    tag        = string
+  })
+  description = "PX-Backup Custom Image Defination"
+  default     = null
+}

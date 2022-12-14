@@ -13,4 +13,5 @@ module "portworx_backup" {
   external_storage_class_name   = var.external_storage_class_name
   enable_portworx_backup        = var.enable_portworx_backup
   stork_version                 = var.stork_version
+  px_backup_custom_image        = var.px_backup_custom_image
 }
