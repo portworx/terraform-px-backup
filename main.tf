@@ -140,7 +140,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.px_backup_custom_image
     iterator = params
     content {
-      name  = "image.${params.value}.registry"
+      name  = "images.${params.value}.registry"
       value = var.px_backup_custom_image.registry
     }
   }
@@ -148,7 +148,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.px_backup_custom_image
     iterator = params
     content {
-      name  = "image.${params.value}.repo"
+      name  = "images.${params.value}.repo"
       value = var.px_backup_custom_image.repo
     }
   }
@@ -157,7 +157,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.px_backup_custom_image
     iterator = params
     content {
-      name  = "image.${params.value}.imageName"
+      name  = "images.${params.value}.imageName"
       value = var.px_backup_custom_image.image_name
     }
   }
@@ -166,7 +166,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.px_backup_custom_image
     iterator = params
     content {
-      name  = "image.${params.value}.tag"
+      name  = "images.${params.value}.tag"
       value = var.px_backup_custom_image.tag
     }
   }
@@ -193,7 +193,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.custom_image_registry_config
     iterator = params
     content {
-      name  = "image.${params.value}.repo"
+      name  = "images.${params.value}.repo"
       value = var.custom_image_registry.image_repository
     }
   }
@@ -202,7 +202,7 @@ resource "helm_release" "portworx_backup" {
     for_each = local.custom_image_registry_config
     iterator = params
     content {
-      name  = "image.${params.value}.registry"
+      name  = "images.${params.value}.registry"
       value = var.custom_image_registry.image_registry
     }
   }
