@@ -166,8 +166,8 @@ resource "helm_release" "portworx_backup" {
     for_each = var.additional_helm_arguments
     iterator = params
     content {
-      name  = "images.${params.value}.imageName"
-      value = var.px_backup_custom_image.image_name
+      name  = params.value.parameter
+      value = params.value.value
     }
   }
 
@@ -175,8 +175,8 @@ resource "helm_release" "portworx_backup" {
     for_each = local.px_backup_custom_image
     iterator = params
     content {
-      name  = params.value.parameter
-      value = params.value.value
+      name  = "images.${params.value}.tag"
+      value = var.px_backup_custom_image.tag
     }
   }
 
