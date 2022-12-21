@@ -106,3 +106,11 @@ variable "px_backup_custom_image" {
   description = "PX-Backup Custom Image Defination"
   default     = null
 }
+variable "additional_helm_arguments" {
+  type = list(object({
+    parameter = string,
+    value     = string
+  }))
+  description = "PX-Backup Additional Helm Chart Arguments, <key, value> objects"
+  default     = []
+}
