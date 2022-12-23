@@ -16,4 +16,5 @@ module "portworx_backup" {
   px_backup_custom_image        = var.px_backup_custom_image
   additional_helm_arguments     = var.additional_helm_arguments
   provisioner                   = var.provisioner
+  azure_credentials             = var.azure_credentials
 }

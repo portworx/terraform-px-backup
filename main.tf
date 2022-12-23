@@ -41,6 +41,18 @@ resource "null_resource" "label_nodes_px_license_server" {
     command = "kubectl label node --all px/ls-"
   }
 }
+resource "kubernetes_secret" "px_azure_secret" {
+  count = var.provisioner == "aks" ? 1 : 0
+  metadata {
+    name      = "px-azure"
+    namespace = "kube-system"
+  }
+  data = {
+    "AZURE_TENANT_ID"     = var.azure_credentials.tenant_id
+    "AZURE_CLIENT_ID"     = var.azure_credentials.client_id
+    "AZURE_CLIENT_SECRET" = var.azure_credentials.client_secret
+  }
+}
 
 resource "helm_release" "portworx" {
   count      = var.enable_portworx ? 1 : 0
@@ -94,8 +106,10 @@ resource "helm_release" "portworx" {
     name  = "EKSInstall"
     value = var.provisioner == "eks" ? true : false
   }
+  depends_on = [
+    kubernetes_secret.px_azure_secret
+  ]
 }
-
 
 resource "kubernetes_manifest" "storageclass_default" {
   count = var.portworx_storage_class_config != null ? 1 : 0
