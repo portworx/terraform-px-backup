@@ -114,3 +114,9 @@ variable "additional_helm_arguments" {
   description = "PX-Backup Additional Helm Chart Arguments, <key, value> objects"
   default     = []
 }
+
+variable "provisioner" {
+  type        = string
+  description = "Provisioner to use for Portworx"
+  default     = "vcenter"
+}

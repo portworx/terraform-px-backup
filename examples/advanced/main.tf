@@ -15,4 +15,5 @@ module "portworx_backup" {
   stork_version                 = var.stork_version
   px_backup_custom_image        = var.px_backup_custom_image
   additional_helm_arguments     = var.additional_helm_arguments
+  provisioner                   = var.provisioner
 }

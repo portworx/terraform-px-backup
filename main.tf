@@ -86,6 +86,14 @@ resource "helm_release" "portworx" {
     name  = "aut"
     value = var.enable_autopilot ? true : false
   }
+  set {
+    name  = "AKSInstall"
+    value = var.provisioner == "aks" ? true : false
+  }
+  set {
+    name  = "EKSInstall"
+    value = var.provisioner == "eks" ? true : false
+  }
 }
 
 
