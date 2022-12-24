@@ -14,6 +14,7 @@ module "portworx_backup" {
   enable_portworx_backup        = var.enable_portworx_backup
   stork_version                 = var.stork_version
   px_backup_custom_image        = var.px_backup_custom_image
+  px_backup_helm_chart_branch   = var.px_backup_helm_chart_branch
   additional_helm_arguments     = var.additional_helm_arguments
   provisioner                   = var.provisioner
   azure_credentials             = var.azure_credentials

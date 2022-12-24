@@ -132,3 +132,8 @@ variable "azure_credentials" {
   description = "Azure App Credentials"
   default     = null
 }
+variable "px_backup_helm_chart_branch" {
+  type        = string
+  description = "The Github Branch from where to install the helm chart"
+  default     = "master"
+}

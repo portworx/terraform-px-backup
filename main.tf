@@ -132,7 +132,7 @@ resource "kubernetes_manifest" "storageclass_default" {
 resource "helm_release" "portworx_backup" {
   count            = var.enable_portworx_backup ? 1 : 0
   name             = "px-central"
-  repository       = "https://raw.githubusercontent.com/portworx/helm/2.4.0-ea/stable"
+  repository       = "https://raw.githubusercontent.com/portworx/helm/${var.px_backup_helm_chart_branch}/stable"
   chart            = "px-central"
   version          = var.px_backup_version
   namespace        = var.namespace
