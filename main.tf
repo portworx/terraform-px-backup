@@ -106,6 +106,14 @@ resource "helm_release" "portworx" {
     name  = "EKSInstall"
     value = var.provisioner == "eks" ? true : false
   }
+  dynamic "set" {
+    for_each = local.eks_install_config
+    iterator = params
+    content {
+      name  = params.key
+      value = params.value
+    }
+  }
   depends_on = [
     kubernetes_secret.px_azure_secret
   ]
