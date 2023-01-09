@@ -82,11 +82,6 @@ resource "helm_release" "portworx" {
   }
 
   set {
-    name  = "kvdbDevice"
-    value = "/dev/sdb"
-  }
-
-  set {
     name  = "deleteStrategy.type"
     value = "UninstallAndWipe"
   }
@@ -108,6 +103,14 @@ resource "helm_release" "portworx" {
   }
   dynamic "set" {
     for_each = local.eks_install_config
+    iterator = params
+    content {
+      name  = params.key
+      value = params.value
+    }
+  }
+  dynamic "set" {
+    for_each = local.vcenter_install_config
     iterator = params
     content {
       name  = params.key
