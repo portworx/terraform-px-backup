@@ -117,6 +117,14 @@ resource "helm_release" "portworx" {
       value = params.value
     }
   }
+  dynamic "set" {
+    for_each = local.gke_install_config
+    iterator = params
+    content {
+      name  = params.key
+      value = params.value
+    }
+  }
   depends_on = [
     kubernetes_secret.px_azure_secret
   ]
