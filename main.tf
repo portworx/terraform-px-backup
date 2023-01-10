@@ -102,7 +102,7 @@ resource "helm_release" "portworx" {
     value = var.provisioner == "eks" ? true : false
   }
   values = [
-    file("templates/${var.provisioner}.yaml")
+    file("${path.module}/templates/${var.provisioner}.yaml")
   ]
   depends_on = [
     kubernetes_secret.px_azure_secret
