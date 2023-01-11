@@ -1,2 +1,2 @@
-drives: "type=standard-rwo,size=200"
-kvdbDevice: "type=standard-rwo,size=100"
+drives: "type=pd-standard,size=200"
+kvdbDevice: "type=pd-standard,size=100"
