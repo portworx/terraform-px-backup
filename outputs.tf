@@ -1,5 +1,5 @@
 output "portworx_operator_status" {
-  value       = helm_release.portworx[0].metadata[0]
+  value       = try(helm_release.portworx[0].metadata[0], "NA")
   description = "Portworx Storage Class Parameters"
 }
 
