@@ -37,3 +37,4 @@ terraform.rc
 .vscode/*
 **/**/tf.plan
 **/.DS_Store
+.infracost
