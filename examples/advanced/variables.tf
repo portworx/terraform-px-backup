@@ -120,16 +120,6 @@ variable "provisioner" {
   description = "Provisioner to use for Portworx"
   default     = "vcenter"
 }
-
-variable "azure_credentials" {
-  type = object({
-    tenant_id     = string,
-    client_id     = string,
-    client_secret = string
-  })
-  description = "Azure App Credentials"
-  default     = null
-}
 variable "px_backup_helm_chart_branch" {
   type        = string
   description = "The Github Branch from where to install the helm chart"

@@ -17,5 +17,4 @@ module "portworx_backup" {
   px_backup_helm_chart_branch   = var.px_backup_helm_chart_branch
   additional_helm_arguments     = var.additional_helm_arguments
   provisioner                   = var.provisioner
-  azure_credentials             = var.azure_credentials
 }
