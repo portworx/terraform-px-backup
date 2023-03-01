@@ -104,9 +104,6 @@ resource "helm_release" "portworx" {
   values = [
     file("${path.module}/templates/${var.provisioner}.yaml")
   ]
-  depends_on = [
-    kubernetes_secret.px_azure_secret
-  ]
 }
 
 resource "kubernetes_manifest" "storageclass_default" {
