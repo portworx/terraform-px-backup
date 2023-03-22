@@ -57,9 +57,9 @@ resource "null_resource" "label_nodes_px_license_server" {
 resource "helm_release" "portworx" {
   count      = var.enable_portworx ? 1 : 0
   name       = "portworx"
-  repository = "https://http://charts.portworx.io"
-  chart      = "px-central"
-  version    = "2.11.0"
+  repository = "https://raw.githubusercontent.com/portworx/eks-blueprint-helm/main/repo/stable"
+  chart      = "portworx"
+  version    = "2.13.0"
 
   set {
     name  = "imageVersion"
