@@ -59,7 +59,7 @@ resource "helm_release" "portworx" {
   name       = "portworx"
   repository = "https://raw.githubusercontent.com/portworx/eks-blueprint-helm/main/repo/stable"
   chart      = "portworx"
-  version    = "2.13.0"
+  version    = "2.11.0"
 
   set {
     name  = "imageVersion"
