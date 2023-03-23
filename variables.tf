@@ -137,3 +137,32 @@ variable "px_backup_helm_chart_branch" {
   description = "The Github Branch from where to install the helm chart"
   default     = "master"
 }
+
+
+variable "vsphere_user" {
+  type        = string
+  description = "The Username for vsphere_user"
+  sensitive   = true
+}
+
+variable "vsphere_password" {
+  type        = string
+  description = "The password for vsphere"
+  sensitive   = true
+}
+
+variable "vsphere_port" {
+  type        = string
+  description = "The Port for connection"
+  default     = "443"
+}
+
+variable "vsphere_url" {
+  type        = string
+  description = "The vsphere URL"
+}
+
+variable "vsphere_datastore" {
+  type        = string
+  description = "The Datastore prefix to use"
+}

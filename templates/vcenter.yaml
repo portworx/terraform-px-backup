@@ -1,1 +1,23 @@
-kvdbDevice: "/dev/sdb"
+kvdbDevice: type=lazyzeroedthick,size=32
+drives: type=lazyzeroedthick,size=150
+envs:
+  - name: VSPHERE_INSECURE
+    value: "true"
+  - name: VSPHERE_USER
+    valueFrom:
+      secretKeyRef:
+        name: px-vsphere-secret
+        key: VSPHERE_USER
+  - name: VSPHERE_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: px-vsphere-secret
+        key: VSPHERE_PASSWORD
+  - name: VSPHERE_INSTALL_MODE
+    value: shared
+  - name: VSPHERE_VCENTER
+    value: ${vcenter_url}
+  - name: VSPHERE_VCENTER_PORT
+    value: ${vcenter_port}
+  - name: VSPHERE_DATASTORE_PREFIX
+    value: ${vsphere_datastore}

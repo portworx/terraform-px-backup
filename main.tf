@@ -41,18 +41,17 @@ resource "null_resource" "label_nodes_px_license_server" {
     command = "kubectl label node --all px/ls-"
   }
 }
-# resource "kubernetes_secret" "px_azure_secret" {
-#   count = var.provisioner == "aks" ? 1 : 0
-#   metadata {
-#     name      = "px-azure"
-#     namespace = "kube-system"
-#   }
-#   data = {
-#     "AZURE_TENANT_ID"     = var.azure_credentials.tenant_id
-#     "AZURE_CLIENT_ID"     = var.azure_credentials.client_id
-#     "AZURE_CLIENT_SECRET" = var.azure_credentials.client_secret
-#   }
-# }
+resource "kubernetes_secret" "px_vsphere_secret" {
+  count = var.provisioner == "vcenter" ? 1 : 0
+  metadata {
+    name      = "px-vsphere-secret"
+    namespace = "kube-system"
+  }
+  data = {
+    "VSPHERE_USER"     = var.vsphere_user
+    "VSPHERE_PASSWORD" = var.vsphere_password
+  }
+}
 
 resource "helm_release" "portworx" {
   count      = var.enable_portworx ? 1 : 0
@@ -101,9 +100,11 @@ resource "helm_release" "portworx" {
     name  = "EKSInstall"
     value = var.provisioner == "eks" ? true : false
   }
-  values = [
-    file("${path.module}/templates/${var.provisioner}.yaml")
-  ]
+  values = [templatefile("${path.module}/templates/${var.provisioner}.yaml", {
+    vcenter_url       = var.vsphere_url
+    vcenter_port      = var.vsphere_port
+    vsphere_datastore = var.vsphere_datastore
+  })]
 }
 
 resource "kubernetes_manifest" "storageclass_default" {
