@@ -102,7 +102,6 @@ resource "helm_release" "portworx" {
   }
   values = [templatefile("${path.module}/templates/${var.provisioner}.yaml", {
     vcenter_url       = var.vsphere_url
-    vcenter_port      = tonumber(var.vsphere_port)
     vsphere_datastore = var.vsphere_datastore
   })]
 }
