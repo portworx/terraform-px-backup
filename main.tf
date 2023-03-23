@@ -105,6 +105,9 @@ resource "helm_release" "portworx" {
     vcenter_port      = var.vsphere_port
     vsphere_datastore = var.vsphere_datastore
   })]
+  depends_on = [
+    kubernetes_secret.px_vsphere_secret
+  ]
 }
 
 resource "kubernetes_manifest" "storageclass_default" {
