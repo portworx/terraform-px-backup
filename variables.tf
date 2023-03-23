@@ -151,11 +151,11 @@ variable "vsphere_password" {
   sensitive   = true
 }
 
-# variable "vsphere_port" {
-#   type        = number
-#   description = "The Port for connection"
-#   default     = 443
-# }
+variable "vsphere_port" {
+  type        = string
+  description = "The Port for connection"
+  default     = "443"
+}
 
 variable "vsphere_url" {
   type        = string

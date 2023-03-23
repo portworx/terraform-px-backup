@@ -18,6 +18,6 @@ envs:
   - name: VSPHERE_VCENTER
     value: ${vcenter_url}
   - name: VSPHERE_VCENTER_PORT
-    value: 443
+    value: "${vcenter_port}"
   - name: VSPHERE_DATASTORE_PREFIX
     value: ${vsphere_datastore}
