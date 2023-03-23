@@ -152,9 +152,9 @@ variable "vsphere_password" {
 }
 
 variable "vsphere_port" {
-  type        = string
+  type        = number
   description = "The Port for connection"
-  default     = "443"
+  default     = 443
 }
 
 variable "vsphere_url" {
