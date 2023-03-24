@@ -1,5 +1,5 @@
 kvdbDevice: type=lazyzeroedthick,size=32
-drives: type=lazyzeroedthick,size=256
+drives: type=lazyzeroedthick,size=150
 envs:
   - name: VSPHERE_INSECURE
     value: "true"
